@@ -13,14 +13,14 @@ func get_input_vector() -> Vector2:
 
 
 func _input( event: InputEvent ) -> void:
-	if event.is_action_pressed("ui_accept", false):
+	if event.is_action_pressed("input_accept", false):
 		accept_pressed.emit()
 	
-	if event.is_action_released("ui_accept"):
+	if event.is_action_released("input_accept"):
 		accept_released.emit()
 	
-	if event.is_action_pressed("ui_cancel", false):
+	if event.is_action_pressed("input_cancel", false):
 		cancel_pressed.emit()
 	
-	if event.is_action_released("ui_cancel"):
+	if event.is_action_released("input_cancel"):
 		cancel_released.emit()

@@ -6,8 +6,8 @@ class_name PlayerStateMachine extends StateMachine
 
 var actor: Player: set = set_actor, get = get_actor
 
-func set_actor( _actor: Player ):
-	actor = _actor
+func set_actor( _new_actor: Player ):
+	actor = _new_actor
 	propogate_actor()
 
 
