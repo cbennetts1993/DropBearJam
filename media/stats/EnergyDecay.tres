@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="IntegerStat" load_steps=2 format=3 uid="uid://cug0ajujidur5"]
+
+[ext_resource type="Script" uid="uid://dqr7j4xff04di" path="res://scripts/stats/IntegerStat.gd" id="1_2txaf"]
+
+[resource]
+script = ExtResource("1_2txaf")
+default_value = 0
+name = &"Energy Decay"
+metadata/_custom_type_script = "uid://dqr7j4xff04di"

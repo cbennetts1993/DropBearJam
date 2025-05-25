@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FloatingStat" load_steps=2 format=3 uid="uid://drx8at8xmhc6p"]
+
+[ext_resource type="Script" uid="uid://bpw8x4ieasknk" path="res://scripts/stats/FloatingStat.gd" id="1_b4vah"]
+
+[resource]
+script = ExtResource("1_b4vah")
+default_value = 300.0
+name = &"Speed"
+metadata/_custom_type_script = "uid://bpw8x4ieasknk"

@@ -1,0 +1,26 @@
+class_name InputComponent extends Node
+
+signal accept_pressed
+signal accept_released
+
+signal cancel_pressed
+signal cancel_released
+
+var input_vector: = Vector2.ZERO: get = get_input_vector
+
+func get_input_vector() -> Vector2:
+	return Input.get_vector("input_left", "input_right", "input_up", "input_down")
+
+
+func _input( event: InputEvent ) -> void:
+	if event.is_action_pressed("ui_accept", false):
+		accept_pressed.emit()
+	
+	if event.is_action_released("ui_accept"):
+		accept_released.emit()
+	
+	if event.is_action_pressed("ui_cancel", false):
+		cancel_pressed.emit()
+	
+	if event.is_action_released("ui_cancel"):
+		cancel_released.emit()

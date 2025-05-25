@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="FloatingPooledStat" load_steps=5 format=3 uid="uid://bcu6xotkc1dbn"]
+
+[ext_resource type="Script" uid="uid://dqr7j4xff04di" path="res://scripts/stats/IntegerStat.gd" id="1_3v8ut"]
+[ext_resource type="Script" uid="uid://cf1qnf3owl0ta" path="res://scripts/stats/pooled_stat/FloatingPooledStat.gd" id="1_8b7bv"]
+
+[sub_resource type="Resource" id="Resource_wm7sd"]
+script = ExtResource("1_3v8ut")
+default_value = 100
+name = &"Maximum Energy"
+metadata/_custom_type_script = "uid://dqr7j4xff04di"
+
+[sub_resource type="Resource" id="Resource_qcv63"]
+script = ExtResource("1_3v8ut")
+default_value = 0
+name = &""
+metadata/_custom_type_script = "uid://dqr7j4xff04di"
+
+[resource]
+script = ExtResource("1_8b7bv")
+default_value = 100.0
+max = SubResource("Resource_wm7sd")
+min = SubResource("Resource_qcv63")
+name = &""
+metadata/_custom_type_script = "uid://cf1qnf3owl0ta"

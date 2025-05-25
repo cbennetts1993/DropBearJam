@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://beuffvw86b8pg"]
+
+[ext_resource type="PackedScene" uid="uid://c5kjdarxoaoxh" path="res://media/units/player.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://xs3l4351642b" path="res://media/units/flower.tscn" id="2_0xm2m"]
+
+[node name="World" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_0xm2m")]
+
+[node name="Flower" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(352, 72)

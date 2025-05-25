@@ -1,0 +1,111 @@
+[gd_scene load_steps=20 format=3 uid="uid://c5kjdarxoaoxh"]
+
+[ext_resource type="Texture2D" uid="uid://vdtvrhkuvapv" path="res://icon.svg" id="1_g6wc8"]
+[ext_resource type="Script" uid="uid://cp1m664idlidq" path="res://media/units/player.gd" id="1_ns8mm"]
+[ext_resource type="Script" uid="uid://yjpm6krjukl3" path="res://scripts/Input/input_component.gd" id="2_ns8mm"]
+[ext_resource type="Script" uid="uid://cn10x8lfvxsun" path="res://scripts/state_machine/PlayerStateMachine/PlayerStateMachine.gd" id="3_2l362"]
+[ext_resource type="Script" uid="uid://cs2iegrffcqkq" path="res://scripts/stats/stats_component.gd" id="3_4ste2"]
+[ext_resource type="Script" uid="uid://bgatpeepas7ee" path="res://scripts/state_machine/PlayerStateMachine/player_idle_state.gd" id="4_8k5ry"]
+[ext_resource type="Script" uid="uid://bs4iwu10sv7k3" path="res://scripts/stats/_stat.gd" id="4_epiex"]
+[ext_resource type="Script" uid="uid://x7pqooqod2db" path="res://scripts/state_machine/PlayerStateMachine/player_move_state.gd" id="5_873w5"]
+[ext_resource type="Resource" uid="uid://drx8at8xmhc6p" path="res://media/stats/Speed.tres" id="5_seu8m"]
+[ext_resource type="Script" uid="uid://sysnw38ywvta" path="res://scripts/state_machine/PlayerStateMachine/player_dead_state.gd" id="6_27wwu"]
+[ext_resource type="Resource" uid="uid://bcu6xotkc1dbn" path="res://media/stats/Energy.tres" id="6_seu8m"]
+[ext_resource type="Resource" uid="uid://cug0ajujidur5" path="res://media/stats/EnergyDecay.tres" id="7_gqw2k"]
+[ext_resource type="Script" uid="uid://bqqssivl61nsl" path="res://media/ui/pieces/energy_bar.gd" id="8_873w5"]
+[ext_resource type="Script" uid="uid://5etvnhv1kmkt" path="res://scripts/Interactables/interaction_component.gd" id="14_0l0ek"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ste2"]
+size = Vector2(128, 128)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_igyni"]
+radius = 150.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l0ek"]
+bg_color = Color(0.305882, 0.305882, 0.305882, 0.564706)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igyni"]
+bg_color = Color(0.734201, 0.567509, 0.32928, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_right = 8
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+shadow_size = 3
+
+[sub_resource type="Theme" id="Theme_63qf7"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_0l0ek")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_igyni")
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("input_component", "stat_component", "state_machine")]
+collision_layer = 3
+script = ExtResource("1_ns8mm")
+input_component = NodePath("Components/InputComponent")
+stat_component = NodePath("Components/StatsComponent")
+state_machine = NodePath("StateMachine")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_g6wc8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4ste2")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "idle_state", "move_state", "dead_state", "default_state")]
+script = ExtResource("3_2l362")
+player = NodePath("..")
+idle_state = NodePath("Idle")
+move_state = NodePath("Move")
+dead_state = NodePath("Dead")
+default_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_8k5ry")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("5_873w5")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("6_27wwu")
+
+[node name="Components" type="Node" parent="."]
+
+[node name="StatsComponent" type="Node" parent="Components"]
+script = ExtResource("3_4ste2")
+stats = Array[ExtResource("4_epiex")]([ExtResource("6_seu8m"), ExtResource("7_gqw2k"), ExtResource("5_seu8m")])
+
+[node name="InputComponent" type="Node" parent="Components"]
+script = ExtResource("2_ns8mm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="InteractionComponent2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("14_0l0ek")
+metadata/_custom_type_script = "uid://5etvnhv1kmkt"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionComponent2D"]
+shape = SubResource("CircleShape2D_igyni")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EnergyBar" type="ProgressBar" parent="ui" node_paths=PackedStringArray("stat_component")]
+layout_mode = 0
+offset_left = -64.0
+offset_top = 72.0
+offset_right = 64.0
+offset_bottom = 83.0
+theme = SubResource("Theme_63qf7")
+show_percentage = false
+script = ExtResource("8_873w5")
+stat_component = NodePath("../../Components/StatsComponent")
+stat_name = &"Energy"
+
+[connection signal="accept_pressed" from="Components/InputComponent" to="InteractionComponent2D" method="_on_interact_pressed"]
+[connection signal="accept_released" from="Components/InputComponent" to="InteractionComponent2D" method="_on_interact_released"]

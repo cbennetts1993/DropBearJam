@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=3 uid="uid://xs3l4351642b"]
+
+[ext_resource type="Script" uid="uid://2dj5m4i18v7p" path="res://media/units/nectar_source.gd" id="1_henjs"]
+[ext_resource type="Script" uid="uid://cnfjq736tsnwi" path="res://scripts/Interactables/Interactable.gd" id="2_bwewc"]
+[ext_resource type="Script" uid="uid://cs2iegrffcqkq" path="res://scripts/stats/stats_component.gd" id="2_d8ser"]
+[ext_resource type="Script" uid="uid://bs4iwu10sv7k3" path="res://scripts/stats/_stat.gd" id="3_7fou5"]
+[ext_resource type="Script" uid="uid://dqr7j4xff04di" path="res://scripts/stats/IntegerStat.gd" id="4_xwccp"]
+[ext_resource type="Script" uid="uid://cf1qnf3owl0ta" path="res://scripts/stats/pooled_stat/FloatingPooledStat.gd" id="5_vo4d1"]
+[ext_resource type="Script" uid="uid://bqqssivl61nsl" path="res://media/ui/pieces/energy_bar.gd" id="7_qbbiy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s5q1b"]
+
+[sub_resource type="Resource" id="Resource_d8ser"]
+script = ExtResource("4_xwccp")
+default_value = 40
+name = &""
+metadata/_custom_type_script = "uid://dqr7j4xff04di"
+
+[sub_resource type="Resource" id="Resource_7fou5"]
+script = ExtResource("5_vo4d1")
+default_value = 100.0
+maximum = SubResource("Resource_d8ser")
+name = &"Energy Reserve"
+metadata/_custom_type_script = "uid://cf1qnf3owl0ta"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqw2k"]
+bg_color = Color(0.305882, 0.305882, 0.305882, 0.564706)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2l362"]
+bg_color = Color(0.734201, 0.567509, 0.32928, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_right = 8
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+shadow_size = 3
+
+[sub_resource type="Theme" id="Theme_6nt1x"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_gqw2k")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_2l362")
+
+[node name="Flower" type="CharacterBody2D" node_paths=PackedStringArray("stat_component", "interactable_component")]
+script = ExtResource("1_henjs")
+stat_component = NodePath("Components/StatComponent")
+interactable_component = NodePath("InteractableComponent")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_s5q1b")
+
+[node name="Components" type="Node" parent="."]
+
+[node name="StatComponent" type="Node" parent="Components"]
+script = ExtResource("2_d8ser")
+stats = Array[ExtResource("3_7fou5")]([SubResource("Resource_7fou5")])
+metadata/_custom_type_script = "uid://cs2iegrffcqkq"
+
+[node name="InteractableComponent" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_bwewc")
+metadata/_custom_type_script = "uid://cnfjq736tsnwi"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+shape = SubResource("CircleShape2D_s5q1b")
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EnergyBar" type="ProgressBar" parent="ui" node_paths=PackedStringArray("stat_component")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -24.0
+offset_right = 12.0
+offset_bottom = 6.0
+grow_vertical = 2
+theme = SubResource("Theme_6nt1x")
+fill_mode = 3
+show_percentage = false
+script = ExtResource("7_qbbiy")
+stat_component = NodePath("../../Components/StatComponent")
+stat_name = &"Energy Reserve"
+
+[connection signal="activated" from="InteractableComponent" to="ui/EnergyBar" method="show"]
+[connection signal="deactivated" from="InteractableComponent" to="ui/EnergyBar" method="hide"]
