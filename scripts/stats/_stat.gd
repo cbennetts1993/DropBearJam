@@ -4,6 +4,11 @@ signal value_changed(new_value)
 
 @export var name: StringName
 
+var key: Variant:
+	get:
+		return get_script()
+
+
 var _value: Variant = 0: set = set_value, get = get_value
 
 

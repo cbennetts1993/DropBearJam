@@ -12,19 +12,23 @@ class_name Player extends CharacterBody2D
 
 var speed: float:
 	get:
-		var speed_stat = stat_component.get_stat("Speed")
-		return speed_stat.get_value() if speed_stat else 0.0
+		var speed_stat = stat_component.get_stat(MovementSpeed)
+		var energy: PooledStat = stat_component.get_stat(Energy)
+		return speed_stat.get_value() + (speed_stat.get_value() * energy.percent /100)
 
 func _ready():
-	var energy: PooledStat = stat_component.get_stat("Energy")
+	var energy: PooledStat = stat_component.get_stat(Energy)
 	energy.depleted.connect(die)
 
 
 func _process( delta: float ) -> void:
-	var energy: PooledStat = stat_component.get_stat("Energy")
-	var decay: Stat = stat_component.get_stat("Energy Decay")
+	var energy: PooledStat = stat_component.get_stat(Energy)
+	var decay: Stat = stat_component.get_stat(EnergyDecay)
 	energy.decrease(decay.get_value() * delta)
-
 
 func die():
 	state_machine.change_state(state_machine.dead_state)
+
+
+func _on_timer_timeout() -> void:
+	ChunkManager._on_position_update(global_position)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://by3elnh0570ij"]
+
+[ext_resource type="Script" uid="uid://blq2bx4vkxgja" path="res://scripts/Level/level_manager.gd" id="1_fvluo"]
+[ext_resource type="Script" uid="uid://6isrbwfx3es0" path="res://scripts/Level/spawn_manager.gd" id="2_3maf5"]
+
+[node name="ChunkManager" type="Node"]
+script = ExtResource("1_fvluo")
+
+[node name="SpawnManager" type="Node" parent="."]
+script = ExtResource("2_3maf5")

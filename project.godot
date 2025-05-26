@@ -15,6 +15,10 @@ run/main_scene="uid://beuffvw86b8pg"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ChunkManager="*res://level_manager.tscn"
+
 [input]
 
 input_up={

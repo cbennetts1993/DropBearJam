@@ -8,4 +8,13 @@
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
 
 [node name="Flower" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(352, 72)
+position = Vector2(-8, 408)
+
+[node name="Flower2" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(-408, -272)
+
+[node name="Flower3" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(600, -496)
+
+[node name="Flower4" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(-832, 448)

@@ -1,25 +1,51 @@
-[gd_scene load_steps=20 format=3 uid="uid://c5kjdarxoaoxh"]
+[gd_scene load_steps=26 format=3 uid="uid://c5kjdarxoaoxh"]
 
 [ext_resource type="Texture2D" uid="uid://vdtvrhkuvapv" path="res://icon.svg" id="1_g6wc8"]
 [ext_resource type="Script" uid="uid://cp1m664idlidq" path="res://media/units/player.gd" id="1_ns8mm"]
 [ext_resource type="Script" uid="uid://yjpm6krjukl3" path="res://scripts/Input/input_component.gd" id="2_ns8mm"]
-[ext_resource type="Script" uid="uid://cn10x8lfvxsun" path="res://scripts/state_machine/PlayerStateMachine/PlayerStateMachine.gd" id="3_2l362"]
-[ext_resource type="Script" uid="uid://cs2iegrffcqkq" path="res://scripts/stats/stats_component.gd" id="3_4ste2"]
-[ext_resource type="Script" uid="uid://bgatpeepas7ee" path="res://scripts/state_machine/PlayerStateMachine/player_idle_state.gd" id="4_8k5ry"]
-[ext_resource type="Script" uid="uid://bs4iwu10sv7k3" path="res://scripts/stats/_stat.gd" id="4_epiex"]
-[ext_resource type="Script" uid="uid://x7pqooqod2db" path="res://scripts/state_machine/PlayerStateMachine/player_move_state.gd" id="5_873w5"]
-[ext_resource type="Resource" uid="uid://drx8at8xmhc6p" path="res://media/stats/Speed.tres" id="5_seu8m"]
-[ext_resource type="Script" uid="uid://sysnw38ywvta" path="res://scripts/state_machine/PlayerStateMachine/player_dead_state.gd" id="6_27wwu"]
-[ext_resource type="Resource" uid="uid://bcu6xotkc1dbn" path="res://media/stats/Energy.tres" id="6_seu8m"]
-[ext_resource type="Resource" uid="uid://cug0ajujidur5" path="res://media/stats/EnergyDecay.tres" id="7_gqw2k"]
+[ext_resource type="Script" uid="uid://cn10x8lfvxsun" path="res://scripts/State_machine/PlayerStateMachine/PlayerStateMachine.gd" id="3_2l362"]
+[ext_resource type="Script" uid="uid://cs2iegrffcqkq" path="res://scripts/Stats/stats_component.gd" id="3_4ste2"]
+[ext_resource type="Script" uid="uid://bgatpeepas7ee" path="res://scripts/State_machine/PlayerStateMachine/player_idle_state.gd" id="4_8k5ry"]
+[ext_resource type="Script" uid="uid://bs4iwu10sv7k3" path="res://scripts/Stats/_stat.gd" id="4_epiex"]
+[ext_resource type="Script" uid="uid://x7pqooqod2db" path="res://scripts/State_machine/PlayerStateMachine/player_move_state.gd" id="5_873w5"]
+[ext_resource type="Script" uid="uid://sysnw38ywvta" path="res://scripts/State_machine/PlayerStateMachine/player_dead_state.gd" id="6_27wwu"]
 [ext_resource type="Script" uid="uid://bqqssivl61nsl" path="res://media/ui/pieces/energy_bar.gd" id="8_873w5"]
+[ext_resource type="Script" uid="uid://dqr7j4xff04di" path="res://scripts/Stats/IntegerStat.gd" id="9_igyni"]
+[ext_resource type="Script" uid="uid://3rlociy7gym4" path="res://media/stats/Energy.gd" id="10_eof25"]
+[ext_resource type="Script" uid="uid://cl1or65s65117" path="res://media/stats/EnergyDecay.gd" id="11_rhrot"]
+[ext_resource type="Script" uid="uid://b2raehyv8krui" path="res://media/stats/MovementSpeed.gd" id="12_q5bds"]
 [ext_resource type="Script" uid="uid://5etvnhv1kmkt" path="res://scripts/Interactables/interaction_component.gd" id="14_0l0ek"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ste2"]
 size = Vector2(128, 128)
 
+[sub_resource type="Resource" id="Resource_312ix"]
+script = ExtResource("9_igyni")
+default_value = 100
+name = &"Maximum Energy"
+metadata/_custom_type_script = "uid://dqr7j4xff04di"
+
+[sub_resource type="Resource" id="Resource_wpk3h"]
+script = ExtResource("10_eof25")
+default_value = 100.0
+maximum = SubResource("Resource_312ix")
+name = &"Energy"
+metadata/_custom_type_script = "uid://3rlociy7gym4"
+
+[sub_resource type="Resource" id="Resource_dgh3x"]
+script = ExtResource("11_rhrot")
+default_value = 0.0
+name = &"Energy Decay"
+metadata/_custom_type_script = "uid://cl1or65s65117"
+
+[sub_resource type="Resource" id="Resource_y6uqb"]
+script = ExtResource("12_q5bds")
+default_value = 300.0
+name = &"Movement Speed"
+metadata/_custom_type_script = "uid://b2raehyv8krui"
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_igyni"]
-radius = 150.0
+radius = 120.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l0ek"]
 bg_color = Color(0.305882, 0.305882, 0.305882, 0.564706)
@@ -35,6 +61,12 @@ shadow_size = 3
 [sub_resource type="Theme" id="Theme_63qf7"]
 ProgressBar/styles/background = SubResource("StyleBoxFlat_0l0ek")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_igyni")
+
+[sub_resource type="Resource" id="Resource_igyni"]
+script = ExtResource("10_eof25")
+default_value = 0.0
+name = &""
+metadata/_custom_type_script = "uid://3rlociy7gym4"
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("input_component", "stat_component", "state_machine")]
 collision_layer = 3
@@ -70,7 +102,7 @@ script = ExtResource("6_27wwu")
 
 [node name="StatsComponent" type="Node" parent="Components"]
 script = ExtResource("3_4ste2")
-stats = Array[ExtResource("4_epiex")]([ExtResource("6_seu8m"), ExtResource("7_gqw2k"), ExtResource("5_seu8m")])
+stats = Array[ExtResource("4_epiex")]([SubResource("Resource_wpk3h"), SubResource("Resource_dgh3x"), SubResource("Resource_y6uqb")])
 
 [node name="InputComponent" type="Node" parent="Components"]
 script = ExtResource("2_ns8mm")
@@ -87,7 +119,7 @@ metadata/_custom_type_script = "uid://5etvnhv1kmkt"
 shape = SubResource("CircleShape2D_igyni")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
+zoom = Vector2(0.6, 0.6)
 
 [node name="ui" type="Control" parent="."]
 layout_mode = 3
@@ -105,7 +137,12 @@ theme = SubResource("Theme_63qf7")
 show_percentage = false
 script = ExtResource("8_873w5")
 stat_component = NodePath("../../Components/StatsComponent")
-stat_name = &"Energy"
+stat = SubResource("Resource_igyni")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
 
 [connection signal="accept_pressed" from="Components/InputComponent" to="InteractionComponent2D" method="_on_interact_pressed"]
 [connection signal="accept_released" from="Components/InputComponent" to="InteractionComponent2D" method="_on_interact_released"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

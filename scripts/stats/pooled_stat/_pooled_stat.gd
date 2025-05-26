@@ -6,6 +6,10 @@ signal depleted
 var _max: Stat
 var _min: Stat
 
+var percent:
+	get:
+		return float(_value) / float(get_max_value()) * 100.0
+
 func get_max_value() -> Variant:
 	return _max.get_value() if _max else 100
 

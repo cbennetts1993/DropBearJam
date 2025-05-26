@@ -14,7 +14,6 @@ var is_active: bool = false:
 		
 		if is_active: activated.emit()
 		if !is_active: 
-			is_interacting = false
 			deactivated.emit()
 
 
@@ -24,7 +23,7 @@ var is_interacting: bool = false:
 		if is_interacting == _state: return
 		is_interacting = _state
 		
-		if is_interacting: started_interact.emit()
+		if is_interacting and is_active: started_interact.emit()
 		if !is_interacting: stopped_interact.emit()
 
 

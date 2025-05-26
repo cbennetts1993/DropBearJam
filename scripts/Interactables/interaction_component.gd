@@ -51,6 +51,7 @@ func register( interactable: InteractableComponent ):
 func deregister( interactable: InteractableComponent ):
 	registry.erase(interactable)
 	interactable.is_active = false
+	interactable.is_interacting = false
 
 
 
