@@ -31,4 +31,4 @@ func die():
 
 
 func _on_timer_timeout() -> void:
-	ChunkManager._on_position_update(global_position)
+	ChunkManager._update_chunks(global_position)

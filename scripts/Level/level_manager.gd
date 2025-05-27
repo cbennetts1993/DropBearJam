@@ -1,82 +1,106 @@
-extends Node2D
+extends Node
 
-const directions: = [Vector2i(1,1), Vector2i(-1,1), Vector2i(1,-1), Vector2i(-1,-1)]
-
-## Class for holding chunk data
+## Class for storing chunk data
 class Chunk:
 	extends RefCounted
 	
 	var position: Vector2i
 	var size: Vector2
-	var contents: Dictionary[Node2D, Vector2i]
+	var contents: Dictionary[Node2D, Vector2]
 	
-	func _init(_position: Vector2i, _size: Vector2i, _contents: Array[Node2D] = []):
-		position = _position
-		size = _size
+	func _init(pos: Vector2i, size: Vector2i, contents: Array[Node2D] = []):
+		self.position = pos
+		self.size = size
 		
-		for node in _contents:
-			contents[node] = node.position
+		for node in contents:
+			self.contents[node] = node.position
+	
+	func get_rect() -> Rect2i:
+		return Rect2i(self.position, abs(self.size))
 
 
 ## Chunk management
 
-@export var chunk_size: = Vector2i(1024, 1024)
-@export var active_distance: int = 256
-
-var all_chunks: Dictionary[Vector2i, Chunk] = {}
-var current_chunks: Array[Chunk]
-
-var last_update_position: = Vector2.ZERO
+@export var chunk_size: = Vector2i(2048, 2048)
+@export_range(0, 10) var render_distance: int ##Steps to render
 
 
-func _on_position_update(_pos: Vector2):
-	if _pos.distance_to(last_update_position) < active_distance:
+var last_chunk_position: = Vector2i.ZERO
+var rendered_chunks: Dictionary[Vector2i, Chunk]
+
+var render_positions: Array[Vector2i]
+
+## References
+@export var spawn_manager: SpawnManager
+
+func _ready():
+	_initialize()
+
+
+func _initialize():
+	for x in range(-render_distance, render_distance + 1):
+		for y in range(-render_distance, render_distance + 1):
+			render_positions.append(Vector2i(x, y))
+	
+	for position in render_positions:
+		rendered_chunks[position] = Chunk.new(position, chunk_size)
+
+
+func get_rendered_chunks(_pos: Vector2) -> Array[Vector2i]:
+	var chunk_position: = _world_to_chunk(_pos)
+	
+	if last_chunk_position == chunk_position:
+		return []
+	
+	last_chunk_position = chunk_position
+	
+
+	var updated_chunks: Array[Vector2i] = []
+	
+	for render in render_positions:
+		var position = chunk_position + render
+		updated_chunks.append(position)
+	
+	return updated_chunks
+
+
+func _update_chunks(_pos: Vector2):
+	var chunk_pos = _world_to_chunk(_pos)
+	
+	var valid_chunks = get_rendered_chunks(_pos)
+	if valid_chunks.is_empty():
 		return
 	
-	var chunk_position = _world_to_chunk(_pos)
+	var to_discard: Array[Vector2i] = []
+	var to_add: Array[Vector2i] = []
 	
-	if !all_chunks.has(chunk_position):
-		var new_chunk = _create_chunk(chunk_position, chunk_size)
-		_place_chunk(new_chunk)
+	for pos in rendered_chunks:
+		var discard = !valid_chunks.has(pos)
+		if discard:
+			#print("discarded chunk: ", pos)
+			to_discard.append(pos)
 	
-	var updated_chunks: Array[Chunk] = [all_chunks.get(chunk_position)]
+	## Remove discarded chunks and despawn objects within them
+	for pos in to_discard:
+		var chunk = rendered_chunks.get(pos)
+		for content in chunk.contents:
+			spawn_manager.despawn_node(content)
+		rendered_chunks.erase(pos)
 	
-	for dir in directions:
-		var active_direction = chunk_position + (dir * chunk_size)
-		var chunk_to_place: Chunk = all_chunks.get(active_direction)
-		
-		if chunk_to_place == null:
-			var new_chunk = _create_chunk(active_direction, chunk_size)
-			all_chunks[new_chunk.position] = new_chunk
-			chunk_to_place = new_chunk
-		
-		
-		updated_chunks.append(chunk_to_place)
-		
-		if !current_chunks.has(chunk_to_place):
-			_place_chunk(chunk_to_place)
+	for pos in valid_chunks:
+		var is_new = !rendered_chunks.has(pos)
+		if is_new == true:
+			#print("added chunk: ", pos)
+			to_add.append(pos)
 	
-	for chunk in current_chunks:
-		if !updated_chunks.has(chunk):
-			_remove_chunk(chunk)
-
-
-
-func _create_chunk(_pos: Vector2i, _size: Vector2i = chunk_size, _contents: Array[Node2D] = []) -> Chunk:
-	#Determine contents
-	var new: = Chunk.new(_pos, _size, _contents)
-	all_chunks[new.position] = new
-	return new
-	
-
-func _place_chunk(chunk: Chunk):
-	#spawn_contents(chunk.contents)
-	current_chunks.append(chunk)
-
-
-func _remove_chunk(chunk: Chunk):
-	#despawn_contents(chunk.contents)
-	current_chunks.erase(chunk)
+	## Add in new chunks and spawn contents for them
+	for pos in to_add:
+		var chunk = Chunk.new(pos, chunk_size)
+		rendered_chunks.set(pos, chunk)
+		var spawn_positions = spawn_manager.get_spawn_positions(chunk.get_rect())
+		for spawn in spawn_positions:
+			var spawned_node = spawn_manager.spawn_node(spawn)
+			chunk.contents.set(spawned_node, spawned_node.global_position) 
 
 
 func _world_to_chunk(_pos: Vector2) -> Vector2i:

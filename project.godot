@@ -68,3 +68,10 @@ input_cancel={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[shader_globals]
+
+world_terrain_noise={
+"type": "sampler2D",
+"value": "res://media/world/world_terrain_noise.tres"
+}
