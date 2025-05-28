@@ -1,0 +1,48 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://h1rfd3imtftp"]
+
+[sub_resource type="SystemFont" id="SystemFont_hrqnj"]
+font_names = PackedStringArray("Ink Free")
+
+[sub_resource type="SystemFont" id="SystemFont_36fs5"]
+font_names = PackedStringArray("Ink Free")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r0f1a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q1kdw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hrqnj"]
+bg_color = Color(0.6, 0.6, 0.6, 0.533333)
+corner_radius_top_left = 8
+corner_radius_bottom_right = 8
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igyni"]
+bg_color = Color(0.848628, 0.507671, 0.0434267, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 8
+corner_radius_bottom_right = 8
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+shadow_size = 5
+
+[resource]
+HBoxContainer/constants/separation = 8
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.65098)
+Label/constants/outline_size = 5
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 12
+Label/font_sizes/font_size = 48
+Label/fonts/font = SubResource("SystemFont_hrqnj")
+LineEdit/font_sizes/font_size = 32
+LineEdit/fonts/font = SubResource("SystemFont_36fs5")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_r0f1a")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_q1kdw")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_hrqnj")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_igyni")
+VBoxContainer/constants/separation = 16

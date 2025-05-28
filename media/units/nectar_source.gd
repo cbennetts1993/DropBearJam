@@ -12,16 +12,18 @@ var energy_decay: FloatingStat:
 		return stat_component.get_stat(EnergyDecay)
 
 
+func _enter_tree() -> void:
+	energy_reserve.fill()
+
+
 func _process(delta: float) -> void:
-	if interactable_component.is_interacting == true:
+	if interactable_component.is_interacting == true and !energy_reserve.is_empty():
 		var decay_amount: = energy_decay.get_value() * delta
 		energy_reserve.decrease(decay_amount)
 		transfer_energy(decay_amount)
 
 
 func transfer_energy( amount: float):
-	var targets: Array[Node2D] = $Hitshape.get_overlapping_bodies()
-	for t in targets:
-		if t is Player:
-			var energy: PooledStat = t.stat_component.get_stat(Energy)
-			energy.increase(amount)
+	var player = get_tree().get_first_node_in_group("Player")
+	assert(player is Player, "Player is not vallid")
+	player.add_energy( amount )

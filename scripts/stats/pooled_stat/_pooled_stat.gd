@@ -47,3 +47,10 @@ func fill():
 
 func deplete():
 	_value = get_min_value()
+
+
+func is_full() -> bool:
+	return _value >= get_max_value()
+
+func is_empty() -> bool:
+	return _value <= get_min_value()

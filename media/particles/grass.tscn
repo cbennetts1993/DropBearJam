@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6kwyobuvhdaf"]
+
+[ext_resource type="Shader" uid="uid://bu5ema2to85mc" path="res://scripts/shaders/grass.gdshader" id="1_0tvgk"]
+[ext_resource type="Texture2D" uid="uid://g82m8c47wmaq" path="res://assets/sprites/grass.png" id="2_e1g4m"]
+
+[sub_resource type="Gradient" id="Gradient_0dnat"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.887097)
+colors = PackedColorArray(0.0974788, 0.226495, 9.62615e-08, 1, 0.707867, 0.915167, 7.70092e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5bchb"]
+gradient = SubResource("Gradient_0dnat")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_e3s77"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7onbs"]
+width = 64
+height = 64
+seamless = true
+noise = SubResource("FastNoiseLite_e3s77")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wjtc7"]
+shader = ExtResource("1_0tvgk")
+shader_parameter/wind_noise = SubResource("NoiseTexture2D_7onbs")
+shader_parameter/color_y_gradient = SubResource("GradientTexture1D_5bchb")
+
+[node name="Grass" type="Sprite2D"]
+material = SubResource("ShaderMaterial_wjtc7")
+texture = ExtResource("2_e1g4m")

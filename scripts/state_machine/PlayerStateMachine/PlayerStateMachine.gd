@@ -18,4 +18,5 @@ func get_actor() -> Player:
 @export_group("States")
 @export var idle_state: PlayerState
 @export var move_state: PlayerState
+@export var dash_state: PlayerState
 @export var dead_state: PlayerState

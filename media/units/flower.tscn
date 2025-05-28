@@ -40,17 +40,21 @@ radius = 116.108
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqw2k"]
 bg_color = Color(0.305882, 0.305882, 0.305882, 0.564706)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2l362"]
-bg_color = Color(0.734201, 0.567509, 0.32928, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vo4d1"]
+bg_color = Color(0.848628, 0.507671, 0.0434267, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 corner_radius_top_left = 8
 corner_radius_bottom_right = 8
 expand_margin_left = 4.0
 expand_margin_right = 4.0
-shadow_size = 3
+shadow_size = 5
 
 [sub_resource type="Theme" id="Theme_6nt1x"]
 ProgressBar/styles/background = SubResource("StyleBoxFlat_gqw2k")
-ProgressBar/styles/fill = SubResource("StyleBoxFlat_2l362")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_vo4d1")
 
 [sub_resource type="Resource" id="Resource_7fou5"]
 script = ExtResource("6_xwccp")
@@ -59,16 +63,16 @@ name = &""
 metadata/_custom_type_script = "uid://iohtvkpav0ij"
 
 [node name="Flower" type="CharacterBody2D" node_paths=PackedStringArray("stat_component", "interactable_component")]
+collision_mask = 0
 script = ExtResource("1_henjs")
 stat_component = NodePath("Components/StatComponent")
 interactable_component = NodePath("InteractableComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(8, -96)
+position = Vector2(20, 39)
 texture = ExtResource("2_7fou5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-12, -135)
 shape = SubResource("CircleShape2D_s5q1b")
 
 [node name="Components" type="Node" parent="."]
@@ -79,7 +83,6 @@ stats = Array[ExtResource("3_7fou5")]([SubResource("Resource_qbbiy"), SubResourc
 metadata/_custom_type_script = "uid://cs2iegrffcqkq"
 
 [node name="InteractableComponent" type="Area2D" parent="."]
-position = Vector2(-12, -134)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("2_bwewc")
@@ -90,7 +93,6 @@ metadata/_edit_group_ = true
 shape = SubResource("CircleShape2D_s5q1b")
 
 [node name="Hitshape" type="Area2D" parent="."]
-position = Vector2(-12, -134)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("10_vo4d1")
@@ -107,10 +109,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -154.0
-offset_right = 8.0
-offset_bottom = -114.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 

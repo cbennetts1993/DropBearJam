@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgqdni722jry4"]
+
+[ext_resource type="Script" uid="uid://ccm7wsacw4yn8" path="res://scripts/ui/score_data.gd" id="1_nd4wl"]
+
+[node name="ScoreData" type="HBoxContainer"]
+alignment = 1
+script = ExtResource("1_nd4wl")
+
+[node name="Name" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Seperator" type="Label" parent="."]
+layout_mode = 2
+text = " | "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1

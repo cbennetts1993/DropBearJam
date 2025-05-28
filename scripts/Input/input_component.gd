@@ -6,6 +6,9 @@ signal accept_released
 signal cancel_pressed
 signal cancel_released
 
+signal dash_pressed
+signal dash_released
+
 var input_vector: = Vector2.ZERO: get = get_input_vector
 
 func get_input_vector() -> Vector2:
@@ -24,3 +27,9 @@ func _input( event: InputEvent ) -> void:
 	
 	if event.is_action_released("input_cancel"):
 		cancel_released.emit()
+	
+	if event.is_action_pressed("action_dash", false):
+		dash_pressed.emit()
+		
+	if event.is_action_released("action_dash"):
+		dash_released.emit()

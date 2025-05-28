@@ -15,4 +15,3 @@ func _ready() -> void:
 
 func change_value(_new_value):
 	value = stat.percent
-	print(stat.percent)

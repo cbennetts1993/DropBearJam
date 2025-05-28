@@ -5,7 +5,7 @@ class Chunk:
 	extends RefCounted
 	
 	var position: Vector2i
-	var size: Vector2
+	var size: Vector2i
 	var contents: Dictionary[Node2D, Vector2]
 	
 	func _init(pos: Vector2i, size: Vector2i, contents: Array[Node2D] = []):
@@ -15,8 +15,8 @@ class Chunk:
 		for node in contents:
 			self.contents[node] = node.position
 	
-	func get_rect() -> Rect2i:
-		return Rect2i(self.position, abs(self.size))
+	func get_world_rect() -> Rect2i:
+		return Rect2i(self.position * size , abs(self.size))
 
 
 ## Chunk management
@@ -44,6 +44,11 @@ func _initialize():
 	
 	for position in render_positions:
 		rendered_chunks[position] = Chunk.new(position, chunk_size)
+
+
+func _on_timer_timeout():
+	var player: Player = get_tree().get_first_node_in_group("Player")
+	_update_chunks(player.global_position)
 
 
 func get_rendered_chunks(_pos: Vector2) -> Array[Vector2i]:
@@ -97,7 +102,7 @@ func _update_chunks(_pos: Vector2):
 	for pos in to_add:
 		var chunk = Chunk.new(pos, chunk_size)
 		rendered_chunks.set(pos, chunk)
-		var spawn_positions = spawn_manager.get_spawn_positions(chunk.get_rect())
+		var spawn_positions = spawn_manager.get_spawn_positions(chunk.get_world_rect())
 		for spawn in spawn_positions:
 			var spawned_node = spawn_manager.spawn_node(spawn)
 			chunk.contents.set(spawned_node, spawned_node.global_position) 

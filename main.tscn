@@ -1,20 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://beuffvw86b8pg"]
+[gd_scene load_steps=2 format=3 uid="uid://beuffvw86b8pg"]
 
 [ext_resource type="PackedScene" uid="uid://c5kjdarxoaoxh" path="res://media/units/player.tscn" id="1_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://xs3l4351642b" path="res://media/units/flower.tscn" id="2_0xm2m"]
 
-[node name="World" type="Node2D"]
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
-
-[node name="Flower" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(-8, 408)
-
-[node name="Flower2" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(-408, -272)
-
-[node name="Flower3" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(600, -496)
-
-[node name="Flower4" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(-832, 448)
+position = Vector2(1312, 944)
