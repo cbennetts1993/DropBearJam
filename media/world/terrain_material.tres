@@ -1,0 +1,34 @@
+[gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://cfr7jwp5ll28y"]
+
+[ext_resource type="Shader" uid="uid://danyvui8rfmim" path="res://scripts/shaders/world_terrain_shader.gdshader" id="1_jyvv3"]
+[ext_resource type="Texture2D" uid="uid://baojikr5u8st6" path="res://assets/sprites/single_cell.png" id="2_nvrwl"]
+
+[sub_resource type="Gradient" id="Gradient_4c57u"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.0691057, 0.15102, 0.293878, 0.787755)
+colors = PackedColorArray(0.493462, 0.354949, 0.167578, 1, 0.408096, 0.290436, 0.130866, 1, 0.317018, 0.222115, 0.0931811, 1, 0.552941, 0.498039, 0.0352941, 1, 0.388235, 0.498039, 0.0352941, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4xyv2"]
+gradient = SubResource("Gradient_4c57u")
+
+[sub_resource type="Gradient" id="Gradient_efxa6"]
+offsets = PackedFloat32Array(0, 0.517647, 1)
+colors = PackedColorArray(0.458824, 0.352941, 0.227451, 1, 0.515545, 0.326628, 0.148972, 1, 0.460003, 0.354141, 0.22588, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_312ix"]
+gradient = SubResource("Gradient_efxa6")
+fill_from = Vector2(0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dg77c"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4xyv2"]
+noise = SubResource("FastNoiseLite_dg77c")
+
+[resource]
+shader = ExtResource("1_jyvv3")
+shader_parameter/edge_noise = SubResource("NoiseTexture2D_4xyv2")
+shader_parameter/edge_noise_weight = 0.1
+shader_parameter/grass_texture = ExtResource("2_nvrwl")
+shader_parameter/dirt_texture = SubResource("GradientTexture2D_312ix")
+shader_parameter/dirt_color_ramp = SubResource("GradientTexture1D_4xyv2")

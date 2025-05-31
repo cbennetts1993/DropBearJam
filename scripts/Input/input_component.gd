@@ -15,6 +15,10 @@ func get_input_vector() -> Vector2:
 	return Input.get_vector("input_left", "input_right", "input_up", "input_down")
 
 
+func is_dash_just_pressed():
+	return Input.is_action_just_pressed("action_dash")
+
+
 func _input( event: InputEvent ) -> void:
 	if event.is_action_pressed("input_accept", false):
 		accept_pressed.emit()

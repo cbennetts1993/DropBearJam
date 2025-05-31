@@ -26,6 +26,12 @@ func _ready():
 	energy.depleted.connect(die)
 
 
+func reset():
+	energy.fill()
+	position = Vector2.ZERO
+	state_machine.change_state(state_machine.idle_state)
+
+
 func _process( delta: float ) -> void:
 	energy.decrease(decay.get_value() * delta)
 	
@@ -39,7 +45,7 @@ func _process( delta: float ) -> void:
 
 func add_energy( value: float ):
 	energy.increase(value)
-	score += value
+	GameData.player_score += value
 
 
 func die():

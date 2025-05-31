@@ -25,25 +25,29 @@ class Chunk:
 @export_range(0, 10) var render_distance: int ##Steps to render
 
 
-var last_chunk_position: = Vector2i.ZERO
+var last_chunk_position: Vector2i
 var rendered_chunks: Dictionary[Vector2i, Chunk]
 
 var render_positions: Array[Vector2i]
 
 ## References
 @export var spawn_manager: SpawnManager
+@export var tile_manager: TileMapLayer
 
 func _ready():
 	_initialize()
 
 
 func _initialize():
+	
 	for x in range(-render_distance, render_distance + 1):
 		for y in range(-render_distance, render_distance + 1):
 			render_positions.append(Vector2i(x, y))
 	
-	for position in render_positions:
-		rendered_chunks[position] = Chunk.new(position, chunk_size)
+	#for position in render_positions:
+	#	rendered_chunks[position] = Chunk.new(position, chunk_size)
+	
+	_update_chunks(Vector2.ZERO)
 
 
 func _on_timer_timeout():
@@ -102,6 +106,11 @@ func _update_chunks(_pos: Vector2):
 	for pos in to_add:
 		var chunk = Chunk.new(pos, chunk_size)
 		rendered_chunks.set(pos, chunk)
+		
+		## Pass to the tile manager
+		#tile_manager.populate_chunk(chunk.get_world_rect())
+		
+		## Pass to the spawn manager
 		var spawn_positions = spawn_manager.get_spawn_positions(chunk.get_world_rect())
 		for spawn in spawn_positions:
 			var spawned_node = spawn_manager.spawn_node(spawn)

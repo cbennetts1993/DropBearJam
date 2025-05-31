@@ -17,11 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-ChunkManager="*res://level_manager.tscn"
+GameData="*res://scripts/globals/game_data.gd"
+LevelManager="*res://scripts/Level/level_manager.tscn"
 
 [global_group]
 
 Player="Reference to the Player"
+Flower=""
 
 [input]
 

@@ -14,11 +14,10 @@ func change_state( to_state, args = null ):
 	state.enter(args)
 
 
-func propogate_actor():
+func propogate():
 	for child in get_children():
 		assert(child is State, "Children of StateMachine should only be of the State class: " + self.name + child.name)
 		child.actor = _actor
-		print(child, _actor)
 
 
 func _physics_process( delta: float ) -> void:

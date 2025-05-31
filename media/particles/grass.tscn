@@ -5,8 +5,8 @@
 
 [sub_resource type="Gradient" id="Gradient_0dnat"]
 interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.887097)
-colors = PackedColorArray(0.0974788, 0.226495, 9.62615e-08, 1, 0.707867, 0.915167, 7.70092e-07, 1)
+offsets = PackedFloat32Array(0.530612, 1)
+colors = PackedColorArray(0.707867, 0.915167, 7.70092e-07, 1, 0.290067, 0.333383, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_5bchb"]
 gradient = SubResource("Gradient_0dnat")
@@ -26,4 +26,6 @@ shader_parameter/color_y_gradient = SubResource("GradientTexture1D_5bchb")
 
 [node name="Grass" type="Sprite2D"]
 material = SubResource("ShaderMaterial_wjtc7")
+position = Vector2(0, -40)
+scale = Vector2(2, 2)
 texture = ExtResource("2_e1g4m")

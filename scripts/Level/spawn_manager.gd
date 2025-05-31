@@ -30,7 +30,7 @@ func load_spawn_pool(scenes: Array[PackedScene], amount: int = 100) -> Array[Nod
 
 func get_spawn_positions(rect: Rect2i, noise: NoiseTexture2D = noise_test, density: float = 0.002) -> Array[Vector2]:
 	
-	var max_samples: int = 32
+	var max_samples: int = 40
 	var spawn_points: Array[Vector2]
 	var max_spawns: int = density * rect.size.length()
 	

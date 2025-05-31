@@ -8,7 +8,7 @@ var actor: Player: set = set_actor, get = get_actor
 
 func set_actor( _new_actor: Player ):
 	actor = _new_actor
-	propogate_actor()
+	propogate()
 
 
 func get_actor() -> Player:

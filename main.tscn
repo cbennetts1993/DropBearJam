@@ -1,9 +1,444 @@
-[gd_scene load_steps=2 format=3 uid="uid://beuffvw86b8pg"]
+[gd_scene load_steps=15 format=3 uid="uid://beuffvw86b8pg"]
 
 [ext_resource type="PackedScene" uid="uid://c5kjdarxoaoxh" path="res://media/units/player.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://c7h2fwiecthwy" path="res://scripts/State_machine/GameStateMachine/game_state_machine.gd" id="1_4c57u"]
+[ext_resource type="Theme" uid="uid://h1rfd3imtftp" path="res://media/ui/main_theme.tres" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://yjpm6krjukl3" path="res://scripts/Input/input_component.gd" id="2_4c57u"]
+[ext_resource type="Script" uid="uid://dfbaphhwm00w1" path="res://scripts/State_machine/GameStateMachine/ProcessState.gd" id="2_efxa6"]
+[ext_resource type="Script" uid="uid://d2sjsrof8xa47" path="res://scripts/ui/score_label.gd" id="3_h2yge"]
+[ext_resource type="Material" uid="uid://cfr7jwp5ll28y" path="res://media/world/terrain_material.tres" id="5_kek77"]
+[ext_resource type="Texture2D" uid="uid://f5gmtv20hpbu" path="res://media/world/world_terrain_noise.tres" id="6_kek77"]
+[ext_resource type="Texture2D" uid="uid://crnsqqx1idihn" path="res://assets/sprites/wind_1x3.png" id="7_5vw27"]
+[ext_resource type="Script" uid="uid://dm47d3p635d4w" path="res://scripts/ui/hummingbird_fact.gd" id="8_kek77"]
+[ext_resource type="AudioStream" uid="uid://w8abuph3qinr" path="res://assets/sound/hummingbird2.wav" id="10_4c57u"]
 
-[node name="Game" type="Node2D"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kek77"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_dg77c"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.120393, 0.486486, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0.998768, 1, 1, 1, 0)
+
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_lquwl"]
+fade_time = 1.0
+stream_count = 1
+stream_0 = ExtResource("10_4c57u")
+
+[node name="World" type="Node2D"]
 y_sort_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_0xm2m")]
+[node name="GameState" type="Node" parent="." node_paths=PackedStringArray("title_state", "start_state", "run_state", "end_state", "default_state")]
+script = ExtResource("1_4c57u")
+title_state = NodePath("Title")
+start_state = NodePath("Start")
+run_state = NodePath("Run")
+end_state = NodePath("End")
+default_state = NodePath("Title")
+
+[node name="Title" type="Node" parent="GameState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("2_efxa6")
+next_state = NodePath("../Start")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GameState/Title"]
+
+[node name="Control" type="Control" parent="GameState/Title/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_0xm2m")
+
+[node name="Control" type="Control" parent="GameState/Title/CanvasLayer/Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 344.0
+offset_top = 144.0
+offset_right = 384.0
+offset_bottom = 184.0
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="GameState/Title/CanvasLayer/Control/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 96
+text = "Nectar
+    Collectar"
+
+[node name="next" type="Label" parent="GameState/Title/CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 432.0
+offset_right = 790.0
+offset_bottom = 519.0
+text = "Press [E] to 
+continue"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameState/Title/CanvasLayer"]
+root_node = NodePath("")
+
+[node name="InputComponent" type="Node" parent="GameState/Title"]
+script = ExtResource("2_4c57u")
+metadata/_custom_type_script = "uid://yjpm6krjukl3"
+
+[node name="Start" type="Node" parent="GameState" node_paths=PackedStringArray("next_state")]
+process_mode = 4
+script = ExtResource("2_efxa6")
+next_state = NodePath("../Run")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GameState/Start"]
+visible = false
+
+[node name="Control" type="Control" parent="GameState/Start/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_0xm2m")
+
+[node name="Instructions" type="Control" parent="GameState/Start/CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dash" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions"]
+layout_mode = 2
+offset_left = -148.0
+offset_top = -46.798
+offset_right = 186.0
+offset_bottom = 40.202
+rotation = 0.153589
+text = "Press [SPACE]
+to dash"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Movement" type="Control" parent="GameState/Start/CanvasLayer/Control/Instructions"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -232.0
+offset_top = -156.0
+offset_right = -134.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.232129
+metadata/_edit_group_ = true
+
+[node name="Move" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions/Movement"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -208.389
+offset_top = -54.2372
+offset_right = 196.611
+offset_bottom = -12.2372
+grow_horizontal = 2
+grow_vertical = 2
+text = "Use         to move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="W" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions/Movement"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.1183
+offset_top = -78.0959
+offset_right = -31.1183
+offset_bottom = -36.0959
+grow_horizontal = 2
+grow_vertical = 2
+text = "W"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="A" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions/Movement"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.1183
+offset_top = -38.0959
+offset_right = -63.1183
+offset_bottom = 3.90413
+grow_horizontal = 2
+grow_vertical = 2
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="S" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions/Movement"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.1183
+offset_top = -38.0959
+offset_right = -31.1183
+offset_bottom = 3.90413
+grow_horizontal = 2
+grow_vertical = 2
+text = "S"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="D" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions/Movement"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.1183
+offset_top = -36.0959
+offset_right = 2.88169
+offset_bottom = 5.90413
+grow_horizontal = 2
+grow_vertical = 2
+text = "D"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="next" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions"]
+layout_mode = 0
+offset_left = -220.0
+offset_top = 128.0
+offset_right = 234.0
+offset_bottom = 215.0
+text = "Press [E] to 
+play"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Drink" type="Label" parent="GameState/Start/CanvasLayer/Control/Instructions"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -198.798
+offset_right = 441.0
+offset_bottom = -66.798
+text = "Press and Hold
+[E]
+to drink nectar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameState/Start/CanvasLayer"]
+root_node = NodePath("")
+
+[node name="InputComponent" type="Node" parent="GameState/Start"]
+script = ExtResource("2_4c57u")
+metadata/_custom_type_script = "uid://yjpm6krjukl3"
+
+[node name="Run" type="Node2D" parent="GameState" node_paths=PackedStringArray("next_state")]
+process_mode = 4
+script = ExtResource("2_efxa6")
+next_state = NodePath("../End")
+
+[node name="Player" parent="GameState/Run" instance=ExtResource("1_0xm2m")]
+z_index = 2
 position = Vector2(1312, 944)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameState/Run/Player"]
+remote_path = NodePath("../../Camera2D")
+update_rotation = false
+update_scale = false
+
+[node name="Camera2D" type="Camera2D" parent="GameState/Run"]
+position = Vector2(1312, 944)
+zoom = Vector2(0.6, 0.6)
+
+[node name="Background" type="Sprite2D" parent="GameState/Run/Camera2D"]
+z_index = -2
+material = ExtResource("5_kek77")
+texture = ExtResource("6_kek77")
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="GameState/Run/Camera2D"]
+material = SubResource("CanvasItemMaterial_kek77")
+amount = 2
+texture = ExtResource("7_5vw27")
+emission_shape = 3
+emission_rect_extents = Vector2(1024, 1024)
+spread = 1.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+scale_amount_min = 2.0
+scale_amount_max = 4.5
+color_ramp = SubResource("Gradient_dg77c")
+anim_speed_min = 0.8
+anim_speed_max = 1.2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GameState/Run"]
+visible = false
+
+[node name="Score Label" type="Label" parent="GameState/Run/CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -268.0
+offset_top = 40.0
+offset_right = 269.0
+offset_bottom = 82.0
+grow_horizontal = 2
+theme = ExtResource("2_0xm2m")
+text = "Nectar Collected: [VALUE]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_h2yge")
+
+[node name="Timer" type="Timer" parent="GameState/Run/CanvasLayer/Score Label"]
+wait_time = 0.1
+autostart = true
+
+[node name="End" type="Node" parent="GameState" node_paths=PackedStringArray("next_state")]
+process_mode = 4
+script = ExtResource("2_efxa6")
+next_state = NodePath("../Run")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GameState/End"]
+visible = false
+
+[node name="Control" type="Control" parent="GameState/End/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_0xm2m")
+
+[node name="Score Label" type="Label" parent="GameState/End/CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -268.0
+offset_top = -304.0
+offset_right = 269.0
+offset_bottom = -262.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_0xm2m")
+text = "Nectar Collected: [VALUE]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_h2yge")
+
+[node name="Timer" type="Timer" parent="GameState/End/CanvasLayer/Control/Score Label"]
+wait_time = 0.1
+autostart = true
+
+[node name="next" type="Label" parent="GameState/End/CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = 276.0
+offset_right = 291.0
+offset_bottom = 318.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press [SPACE] to play again!"
+
+[node name="exhausted" type="Label" parent="GameState/End/CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = 60.0
+offset_right = 291.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You're exhausted!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hummingbird fact" type="Label" parent="GameState/End/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 216.0
+offset_top = 416.0
+offset_right = -216.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_0xm2m")
+theme_override_font_sizes/font_size = 32
+text = "Hummingbirds have a ball-socket joint in in their shoulder that lets them rotate their wings to hover, fly backwards or even upside down!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("8_kek77")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameState/End/CanvasLayer"]
+root_node = NodePath("")
+
+[node name="InputComponent" type="Node" parent="GameState/End"]
+script = ExtResource("2_4c57u")
+metadata/_custom_type_script = "uid://yjpm6krjukl3"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameState"]
+stream = SubResource("AudioStreamPlaylist_lquwl")
+volume_db = -8.0
+autoplay = true
+
+[connection signal="set_visible" from="GameState/Title" to="GameState/Title/CanvasLayer" method="set_visible"]
+[connection signal="accept_pressed" from="GameState/Title/InputComponent" to="GameState/Title" method="push_next_state"]
+[connection signal="set_visible" from="GameState/Start" to="GameState/Start/CanvasLayer" method="set_visible"]
+[connection signal="accept_pressed" from="GameState/Start/InputComponent" to="GameState/Start" method="push_next_state"]
+[connection signal="set_visible" from="GameState/Run" to="GameState/Run/CanvasLayer" method="set_visible"]
+[connection signal="died" from="GameState/Run/Player" to="GameState/Run" method="push_next_state"]
+[connection signal="timeout" from="GameState/Run/CanvasLayer/Score Label/Timer" to="GameState/Run/CanvasLayer/Score Label" method="_update_score"]
+[connection signal="entered" from="GameState/End" to="GameState/End/CanvasLayer/hummingbird fact" method="push_random"]
+[connection signal="exited" from="GameState/End" to="GameState" method="reset_game_state"]
+[connection signal="set_visible" from="GameState/End" to="GameState/End/CanvasLayer" method="set_visible"]
+[connection signal="timeout" from="GameState/End/CanvasLayer/Control/Score Label/Timer" to="GameState/End/CanvasLayer/Control/Score Label" method="_update_score"]
+[connection signal="dash_pressed" from="GameState/End/InputComponent" to="GameState/End" method="push_next_state"]

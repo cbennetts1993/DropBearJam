@@ -15,6 +15,9 @@ var energy_decay: FloatingStat:
 func _enter_tree() -> void:
 	energy_reserve.fill()
 
+func reset():
+	energy_reserve.fill()
+
 
 func _process(delta: float) -> void:
 	if interactable_component.is_interacting == true and !energy_reserve.is_empty():

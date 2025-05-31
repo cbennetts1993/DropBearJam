@@ -12,6 +12,8 @@ func get_actor() -> Variant:
 	return _actor
 
 
+var state_machine: StateMachine
+
 func enter( _args ):
 	_enter(_args)
 	entered.emit()
