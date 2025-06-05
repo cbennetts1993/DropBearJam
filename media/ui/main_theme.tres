@@ -1,7 +1,6 @@
 [gd_resource type="Theme" load_steps=7 format=3 uid="uid://h1rfd3imtftp"]
 
-[sub_resource type="SystemFont" id="SystemFont_hrqnj"]
-font_names = PackedStringArray("Ink Free")
+[ext_resource type="FontFile" uid="uid://cx6q3tqah27y4" path="res://assets/fonts/CrayonLibre.otf" id="1_36fs5"]
 
 [sub_resource type="SystemFont" id="SystemFont_36fs5"]
 font_names = PackedStringArray("Ink Free")
@@ -38,7 +37,7 @@ Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 12
 Label/font_sizes/font_size = 48
-Label/fonts/font = SubResource("SystemFont_hrqnj")
+Label/fonts/font = ExtResource("1_36fs5")
 LineEdit/font_sizes/font_size = 32
 LineEdit/fonts/font = SubResource("SystemFont_36fs5")
 LineEdit/styles/focus = SubResource("StyleBoxEmpty_r0f1a")

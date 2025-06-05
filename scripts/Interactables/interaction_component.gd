@@ -26,9 +26,12 @@ var priority_interactable: InteractableComponent:
 func _ready():
 	self.area_entered.connect(register)
 	self.area_exited.connect(deregister)
-	timer = Timer.new()
-	timer.start(0.1)
+	#timer = Timer.new()
+	#timer.start(0.1)
 
+
+func _process(delta: float) -> void:
+	_sort_by_distance()
 
 
 func _sort_by_distance():
@@ -37,7 +40,7 @@ func _sort_by_distance():
 
 	var distance_sort = func( a: InteractableComponent, b: InteractableComponent ): 
 		return global_position.distance_to(a.global_position) \
-				>= global_position.distance_to(b.global_position)
+				< global_position.distance_to(b.global_position)
 	registry.sort_custom(distance_sort)
 	
 	priority_interactable = registry.front()

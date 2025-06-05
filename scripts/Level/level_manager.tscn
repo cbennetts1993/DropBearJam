@@ -1,138 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://by3elnh0570ij"]
+[gd_scene load_steps=6 format=3 uid="uid://by3elnh0570ij"]
 
 [ext_resource type="Script" uid="uid://blq2bx4vkxgja" path="res://scripts/Level/level_manager.gd" id="1_on4cp"]
 [ext_resource type="Script" uid="uid://6isrbwfx3es0" path="res://scripts/Level/spawn_manager.gd" id="2_6dnm6"]
 [ext_resource type="PackedScene" uid="uid://xs3l4351642b" path="res://media/units/flower.tscn" id="3_t4afp"]
 [ext_resource type="PackedScene" uid="uid://b6kwyobuvhdaf" path="res://media/particles/grass.tscn" id="4_fc1g6"]
 [ext_resource type="Texture2D" uid="uid://f5gmtv20hpbu" path="res://media/world/world_terrain_noise.tres" id="5_02vmc"]
-[ext_resource type="Texture2D" uid="uid://bv8vkg18xywvy" path="res://assets/sprites/grass_tiles.png" id="6_pov3v"]
-[ext_resource type="Script" uid="uid://cyrlwr61ul8yt" path="res://scripts/Level/tile_manager.gd" id="7_5p7wd"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s60hn"]
-resource_name = "Grass"
-texture = ExtResource("6_pov3v")
-texture_region_size = Vector2i(64, 64)
-0:0/0 = 0
-0:0/0/terrain_set = 0
-0:0/0/terrain = 0
-0:0/0/terrains_peering_bit/right_side = 0
-0:0/0/terrains_peering_bit/bottom_right_corner = 0
-0:0/0/terrains_peering_bit/bottom_side = 0
-1:1/0 = 0
-1:1/0/terrain_set = 0
-1:1/0/terrain = 0
-1:1/0/terrains_peering_bit/right_side = 0
-1:1/0/terrains_peering_bit/bottom_right_corner = 0
-1:1/0/terrains_peering_bit/bottom_side = 0
-1:1/0/terrains_peering_bit/bottom_left_corner = 0
-1:1/0/terrains_peering_bit/left_side = 0
-1:1/0/terrains_peering_bit/top_left_corner = 0
-1:1/0/terrains_peering_bit/top_side = 0
-1:1/0/terrains_peering_bit/top_right_corner = 0
-2:1/0 = 0
-2:1/0/terrain_set = 0
-2:1/0/terrain = 0
-2:1/0/terrains_peering_bit/bottom_side = 0
-2:1/0/terrains_peering_bit/bottom_left_corner = 0
-2:1/0/terrains_peering_bit/left_side = 0
-2:1/0/terrains_peering_bit/top_left_corner = 0
-2:1/0/terrains_peering_bit/top_side = 0
-2:2/0 = 0
-2:2/0/terrain_set = 0
-2:2/0/terrain = 0
-2:2/0/terrains_peering_bit/left_side = 0
-2:2/0/terrains_peering_bit/top_left_corner = 0
-2:2/0/terrains_peering_bit/top_side = 0
-1:0/0 = 0
-1:0/0/terrain_set = 0
-1:0/0/terrain = 0
-1:0/0/terrains_peering_bit/right_side = 0
-1:0/0/terrains_peering_bit/bottom_right_corner = 0
-1:0/0/terrains_peering_bit/bottom_side = 0
-1:0/0/terrains_peering_bit/bottom_left_corner = 0
-1:0/0/terrains_peering_bit/left_side = 0
-2:0/0 = 0
-2:0/0/terrain_set = 0
-2:0/0/terrain = 0
-2:0/0/terrains_peering_bit/bottom_side = 0
-2:0/0/terrains_peering_bit/bottom_left_corner = 0
-2:0/0/terrains_peering_bit/left_side = 0
-0:1/0 = 0
-0:1/0/terrain_set = 0
-0:1/0/terrain = 0
-0:1/0/terrains_peering_bit/right_side = 0
-0:1/0/terrains_peering_bit/bottom_right_corner = 0
-0:1/0/terrains_peering_bit/bottom_side = 0
-0:1/0/terrains_peering_bit/top_side = 0
-0:1/0/terrains_peering_bit/top_right_corner = 0
-1:2/0 = 0
-1:2/0/terrain_set = 0
-1:2/0/terrain = 0
-1:2/0/terrains_peering_bit/right_side = 0
-1:2/0/terrains_peering_bit/left_side = 0
-1:2/0/terrains_peering_bit/top_left_corner = 0
-1:2/0/terrains_peering_bit/top_side = 0
-1:2/0/terrains_peering_bit/top_right_corner = 0
-0:2/0 = 0
-0:2/0/terrain_set = 0
-0:2/0/terrain = 0
-0:2/0/terrains_peering_bit/right_side = 0
-0:2/0/terrains_peering_bit/top_side = 0
-0:2/0/terrains_peering_bit/top_right_corner = 0
-3:2/0 = 0
-3:2/0/terrain_set = 0
-3:2/0/terrain = 0
-3:2/0/terrains_peering_bit/right_side = 0
-3:2/0/terrains_peering_bit/bottom_right_corner = 0
-3:2/0/terrains_peering_bit/bottom_side = 0
-3:2/0/terrains_peering_bit/left_side = 0
-3:2/0/terrains_peering_bit/top_left_corner = 0
-3:2/0/terrains_peering_bit/top_side = 0
-3:2/0/terrains_peering_bit/top_right_corner = 0
-4:2/0 = 0
-4:2/0/terrain_set = 0
-4:2/0/terrain = 0
-4:2/0/terrains_peering_bit/right_side = 0
-4:2/0/terrains_peering_bit/bottom_side = 0
-4:2/0/terrains_peering_bit/bottom_left_corner = 0
-4:2/0/terrains_peering_bit/left_side = 0
-4:2/0/terrains_peering_bit/top_left_corner = 0
-4:2/0/terrains_peering_bit/top_side = 0
-4:2/0/terrains_peering_bit/top_right_corner = 0
-4:1/0 = 0
-4:1/0/terrain_set = 0
-4:1/0/terrain = 0
-4:1/0/terrains_peering_bit/right_side = 0
-4:1/0/terrains_peering_bit/bottom_right_corner = 0
-4:1/0/terrains_peering_bit/bottom_side = 0
-4:1/0/terrains_peering_bit/bottom_left_corner = 0
-4:1/0/terrains_peering_bit/left_side = 0
-4:1/0/terrains_peering_bit/top_left_corner = 0
-4:1/0/terrains_peering_bit/top_side = 0
-3:1/0 = 0
-3:1/0/terrain_set = 0
-3:1/0/terrain = 0
-3:1/0/terrains_peering_bit/right_side = 0
-3:1/0/terrains_peering_bit/bottom_right_corner = 0
-3:1/0/terrains_peering_bit/bottom_side = 0
-3:1/0/terrains_peering_bit/bottom_left_corner = 0
-3:1/0/terrains_peering_bit/left_side = 0
-3:1/0/terrains_peering_bit/top_side = 0
-3:1/0/terrains_peering_bit/top_right_corner = 0
-
-[sub_resource type="TileSet" id="TileSet_ftccg"]
-tile_size = Vector2i(64, 64)
-terrain_set_0/mode = 0
-terrain_set_0/terrain_0/name = "Terrain 0"
-terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
-sources/0 = SubResource("TileSetAtlasSource_s60hn")
-
-[node name="ChunkManager" type="Node" node_paths=PackedStringArray("spawn_manager", "tile_manager")]
+[node name="ChunkManager" type="Node" node_paths=PackedStringArray("spawn_manager")]
 script = ExtResource("1_on4cp")
 chunk_size = Vector2i(512, 512)
 render_distance = 3
 spawn_manager = NodePath("SpawnManager")
-tile_manager = NodePath("TileMapLayer")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
@@ -143,13 +21,5 @@ script = ExtResource("2_6dnm6")
 object_scenes = Array[PackedScene]([ExtResource("3_t4afp"), ExtResource("4_fc1g6")])
 pool_size = 400
 noise_test = ExtResource("5_02vmc")
-
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-visible = false
-z_index = -1
-position = Vector2(8, 0)
-tile_set = SubResource("TileSet_ftccg")
-script = ExtResource("7_5p7wd")
-noise = ExtResource("5_02vmc")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

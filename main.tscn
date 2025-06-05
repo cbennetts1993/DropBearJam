@@ -75,7 +75,7 @@ offset_left = 336.0
 offset_top = 432.0
 offset_right = 790.0
 offset_bottom = 519.0
-text = "Press [E] to 
+text = "Press [Enter] to 
 continue"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -237,7 +237,7 @@ offset_left = -220.0
 offset_top = 128.0
 offset_right = 234.0
 offset_bottom = 215.0
-text = "Press [E] to 
+text = "Press [Enter] to 
 play"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -249,7 +249,7 @@ offset_top = -198.798
 offset_right = 441.0
 offset_bottom = -66.798
 text = "Press and Hold
-[E]
+[Enter]
 to drink nectar"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -390,10 +390,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -296.0
-offset_top = 60.0
-offset_right = 291.0
-offset_bottom = 102.0
+offset_left = -295.0
+offset_top = -212.0
+offset_right = 292.0
+offset_bottom = -157.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "You're exhausted!"
@@ -404,14 +404,14 @@ vertical_alignment = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 216.0
-offset_top = 416.0
-offset_right = -216.0
-offset_bottom = -55.0
+offset_left = 288.0
+offset_top = 392.0
+offset_right = -288.0
+offset_bottom = -79.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 26
 text = "Hummingbirds have a ball-socket joint in in their shoulder that lets them rotate their wings to hover, fly backwards or even upside down!"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -429,6 +429,7 @@ metadata/_custom_type_script = "uid://yjpm6krjukl3"
 stream = SubResource("AudioStreamPlaylist_lquwl")
 volume_db = -8.0
 autoplay = true
+playback_type = 1
 
 [connection signal="set_visible" from="GameState/Title" to="GameState/Title/CanvasLayer" method="set_visible"]
 [connection signal="accept_pressed" from="GameState/Title/InputComponent" to="GameState/Title" method="push_next_state"]

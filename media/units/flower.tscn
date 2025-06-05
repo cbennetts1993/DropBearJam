@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://3j1rbxxjdf6o" path="res://scripts/HitShapes/HitShape.gd" id="10_vo4d1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s5q1b"]
-radius = 12.0
+radius = 48.3735
 
 [sub_resource type="Resource" id="Resource_vo4d1"]
 script = ExtResource("5_7fou5")
@@ -23,19 +23,19 @@ metadata/_custom_type_script = "uid://dqr7j4xff04di"
 [sub_resource type="Resource" id="Resource_qbbiy"]
 resource_local_to_scene = true
 script = ExtResource("6_xwccp")
-default_value = 20.0
+default_value = 60.0
 maximum = SubResource("Resource_vo4d1")
 name = &""
 metadata/_custom_type_script = "uid://iohtvkpav0ij"
 
 [sub_resource type="Resource" id="Resource_7m17i"]
 script = ExtResource("7_xwccp")
-default_value = 100.0
+default_value = 60.0
 name = &""
 metadata/_custom_type_script = "uid://cl1or65s65117"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qbbiy"]
-radius = 116.108
+radius = 169.003
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqw2k"]
 bg_color = Color(0.305882, 0.305882, 0.305882, 0.564706)
@@ -63,6 +63,7 @@ name = &""
 metadata/_custom_type_script = "uid://iohtvkpav0ij"
 
 [node name="Flower" type="CharacterBody2D" node_paths=PackedStringArray("stat_component", "interactable_component") groups=["Flower"]]
+collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_henjs")
 stat_component = NodePath("Components/StatComponent")

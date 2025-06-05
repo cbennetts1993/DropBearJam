@@ -15,10 +15,23 @@ run/main_scene="uid://beuffvw86b8pg"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+general/default_playback_type.web=0
+
 [autoload]
 
 GameData="*res://scripts/globals/game_data.gd"
 LevelManager="*res://scripts/Level/level_manager.tscn"
+SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"
+
+[display]
+
+window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/silent_wolf/plugin.cfg")
 
 [global_group]
 
@@ -74,6 +87,7 @@ action_dash={
 2d_physics/layer_1="World"
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Interactables"
+2d_physics/layer_4="flowers"
 
 [rendering]
 
