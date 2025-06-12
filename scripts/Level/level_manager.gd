@@ -93,7 +93,7 @@ func _update_chunks(_pos: Vector2):
 	for pos in to_discard:
 		var chunk = rendered_chunks.get(pos)
 		for content in chunk.contents:
-			spawn_manager.despawn_node(content)
+			spawn_manager._return_node(content)
 		rendered_chunks.erase(pos)
 	
 	for pos in valid_chunks:
@@ -113,7 +113,7 @@ func _update_chunks(_pos: Vector2):
 		## Pass to the spawn manager
 		var spawn_positions = spawn_manager.get_spawn_positions(chunk.get_world_rect())
 		for spawn in spawn_positions:
-			var spawned_node = spawn_manager.spawn_node(spawn)
+			var spawned_node = spawn_manager._place_node(spawn)
 			chunk.contents.set(spawned_node, spawned_node.global_position) 
 
 

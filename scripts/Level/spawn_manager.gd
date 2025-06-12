@@ -1,32 +1,6 @@
 class_name SpawnManager extends Node
 
-@export var object_scenes: Array[PackedScene]
-@export var pool_size: int = 200
-var object_pool: Array[Node]
-
 @export var noise_test: NoiseTexture2D
-
-
-func _ready():
-	assert(!object_scenes.is_empty(), "No spawn objects set")
-	object_pool = load_spawn_pool(object_scenes, pool_size)
-	return
-	
-	var spawn_points = get_spawn_positions(Rect2i(Vector2i(0,0), Vector2i(1024, 1024)), noise_test)
-	
-	for point in spawn_points:
-		spawn_node(point)
-
-
-func load_spawn_pool(scenes: Array[PackedScene], amount: int = 100) -> Array[Node]:
-	var pool: Array[Node]
-	pool.resize(amount)
-	
-	for x in amount:
-		pool[x] = scenes.pick_random().instantiate()
-	
-	return pool
-
 
 func get_spawn_positions(rect: Rect2i, noise: NoiseTexture2D = noise_test, density: float = 0.002) -> Array[Vector2]:
 	
@@ -59,17 +33,47 @@ func get_spawn_positions(rect: Rect2i, noise: NoiseTexture2D = noise_test, densi
 	return spawn_points
 
 
-func spawn_node(at_position: Vector2) -> Node:
-	if object_pool.is_empty():
-		var new_object: Node2D = object_scenes.pick_random().instantiate()
-		object_pool.append(new_object)
-	
-	var spawn = object_pool.pop_back()
-	var current_scene = get_tree().current_scene
-	current_scene.add_child(spawn)
-	spawn.global_position = at_position
-	return spawn
+##############
+## REWORKED ##
+##############
 
-func despawn_node(node: Node):
-	object_pool.push_back(node)
-	node.get_parent().remove_child(node)
+@export var spawn_pools: Array[SpawnPool]
+
+## sum of weights from the spawn pool
+var weight_sum: int:
+	get:
+		var i = 0
+		for pool in spawn_pools:
+			i += pool.weight
+		return i
+
+
+## Place a node from a selected pool at the position
+func _place_node(at_position: Vector2):
+	
+	## select the pool
+	var rand = randi_range(0, weight_sum)
+	var current_weight: int = 0
+	var pool: SpawnPool
+	
+	for source in spawn_pools:
+		current_weight += source.weight
+		if current_weight >= rand:
+			pool = source
+			break
+	
+	var node: Node = pool.get_object()
+	add_child(node)
+	node.global_position = at_position
+	return node
+
+
+## Return the node to the source spaan pool
+func _return_node(node: Node):
+	var source: SpawnPool = node.get_meta("spawn_pool")
+	
+	if source is SpawnPool:
+		source.pool.push_back(node)
+	
+	var parent = node.get_parent()
+	parent.remove_child(node)
